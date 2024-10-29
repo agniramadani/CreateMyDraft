@@ -5,7 +5,11 @@ The aim of the project is to create clinical trial documents using LLMs, leverag
 
 ## Roadmap
 
+- Screenshot
+
 - Prerequisites
+
+- Getting Started
 
 - Author
 
@@ -18,6 +22,7 @@ The aim of the project is to create clinical trial documents using LLMs, leverag
 - Python 3
 - OpenAI
 - LangChain
+
 ## Getting Started
 
 ### Install Dependencies

@@ -6,6 +6,8 @@ The aim of this project is to help users create drafts for essential clinical tr
 
 - Screenshot
 
+- App Overview
+
 - Prerequisites
 
 - Getting Started
@@ -15,6 +17,21 @@ The aim of this project is to help users create drafts for essential clinical tr
 ## Screenshot
 
 ![Screenshot](Screenshot.png)
+
+## App Overview
+
+### Document Types and Input Details:
+
+- **LayCTD (Lay Clinical Trial Document)**:
+   - **Trial Purpose**: A brief description of the main goal of the clinical trial.
+   - **Patient Demographics**: Key details about the participants, such as age range and medical condition.
+   - **Expected Outcomes**: Summary of anticipated results or potential benefits from the trial.
+
+- **ICF (Informed Consent Form)**:
+   - **Participant Information**: General overview of the participant eligibility criteria and trial context.
+   - **Study Risks**: Details about any potential risks involved in the study.
+   - **Study Benefits**: Description of possible benefits to participants.
+   - **Study Duration**: Expected length of the study, for example, 6 months.
 
 ## Prerequisites
 
@@ -26,13 +43,22 @@ The aim of this project is to help users create drafts for essential clinical tr
 ## Getting Started
 
 ### Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### Start the Application
+
 ```bash
 streamlit run main.py 
+```
+
+### Alternative: Docker Hub
+
+The app is also available on Docker Hub. To use the Docker image, simply pull it using the following command:
+```bash
+docker pull agnir/createmydraft
 ```
 
 ## Author

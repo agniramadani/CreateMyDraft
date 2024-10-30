@@ -39,6 +39,7 @@ The aim of this project is to help users create drafts for essential clinical tr
 - OpenAI
 - LangChain
 - SQLite
+- Docker
 
 ## Getting Started
 
@@ -59,6 +60,11 @@ streamlit run main.py
 The app is also available on Docker Hub. To use the Docker image, simply pull it using the following command:
 ```bash
 docker pull agnir/createmydraft
+```
+
+**Important:** After cloning the app, make sure to update `main.py` with your OpenAI API key. This key is necessary for generating content. In the Docker image, the API key is not included, so you will need to add yours manually:
+```bash
+llm = ChatOpenAI(model="gpt-4", api_key="your_key_goes_here")
 ```
 
 ## Author

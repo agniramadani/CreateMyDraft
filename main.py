@@ -6,7 +6,8 @@ from langchain_openai import ChatOpenAI
 # This template will be filled with specific trial information for generating draft summaries.
 layctd_template = (
     "Generate a lay summary for a clinical trial. "
-    "Purpose: {purpose}. Demographics: {demographics}. Expected outcomes: {outcomes}."
+    "Purpose: {purpose}. Demographics: {demographics}. Expected outcomes: {outcomes}. "
+    "Tone: {tone}."
 )
 
 # Initialize the ChatOpenAI model (GPT-4) for use in LangChain
@@ -17,6 +18,12 @@ llm = ChatOpenAI(model="gpt-4")
 # Sidebar for document type selection - offers user a choice of document type
 st.sidebar.title("Create my Draft")
 doc_type = st.sidebar.selectbox("Select Document Type", ["LayCTD", "ICF"])
+
+# Sidebar dropdown for selecting tone/complexity
+tone = st.sidebar.selectbox(
+    "Select Tone/Complexity",
+    ["Simplified Language", "Technical Details", "Detailed Explanations"]
+)
 
 # Main title for the app's interface
 st.title("Clinical Trial Document Draft Generator")
@@ -32,11 +39,11 @@ if doc_type == "LayCTD":
     if st.button("Generate LayCTD Draft"):
         # Use PromptTemplate to insert user-provided values into the lay summary template
         layctd_prompt = PromptTemplate(
-            input_variables=["purpose", "demographics", "outcomes"],
+            input_variables=["purpose", "demographics", "outcomes", "tone"],
             template=layctd_template
         )
-        # Format the template with user inputs to create the final prompt
-        prompt = layctd_prompt.format(purpose=purpose, demographics=demographics, outcomes=outcomes)
+        # Format the template with user inputs and the selected tone to create the final prompt
+        prompt = layctd_prompt.format(purpose=purpose, demographics=demographics, outcomes=outcomes, tone=tone)
         
         # Call the language model to generate the draft based on the prompt
         draft = llm.invoke(prompt)
@@ -48,7 +55,8 @@ elif doc_type == "ICF":
     # Define a template specific for generating Informed Consent Forms (ICF)
     icf_template = (
         "Generate an informed consent form for a clinical trial. "
-        "Information: {info}. Risks: {risks}. Benefits: {benefits}. Duration: {duration}."
+        "Information: {info}. Risks: {risks}. Benefits: {benefits}. Duration: {duration}. "
+        "Tone: {tone}."
     )
     
     # Input fields specific to ICF documents
@@ -61,11 +69,11 @@ elif doc_type == "ICF":
     if st.button("Generate ICF Draft"):
         # Use PromptTemplate to insert user-provided values into the ICF template
         icf_prompt = PromptTemplate(
-            input_variables=["info", "risks", "benefits", "duration"],
+            input_variables=["info", "risks", "benefits", "duration", "tone"],
             template=icf_template
         )
-        # Format the template with user inputs to create the final prompt
-        prompt = icf_prompt.format(info=info, risks=risks, benefits=benefits, duration=duration)
+        # Format the template with user inputs and the selected tone to create the final prompt
+        prompt = icf_prompt.format(info=info, risks=risks, benefits=benefits, duration=duration, tone=tone)
         
         # Call the language model to generate the draft based on the prompt
         draft = llm.invoke(prompt)

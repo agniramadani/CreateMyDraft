@@ -1,14 +1,13 @@
-import streamlit as st
-from langchain.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
+"""
+Streamlit app for creating and saving clinical trial document drafts 
+(LayCTD and ICF) with customizable details and tone.
+"""
 
-# Template for generating a lay summary (LayCTD) for clinical trials
-# This template will be filled with specific trial information for generating draft summaries.
-layctd_template = (
-    "Generate a lay summary for a clinical trial. "
-    "Purpose: {purpose}. Demographics: {demographics}. Expected outcomes: {outcomes}. "
-    "Tone: {tone}."
-)
+import streamlit as st
+from database import save_layctd_draft, save_icf_draft
+from template import layctd_template, icf_template
+from generate import generate_draft
+from langchain_openai import ChatOpenAI
 
 # Initialize the ChatOpenAI model (GPT-4) for use in LangChain
 # Note: Ensure that the API key is stored securely and not hard-coded in production environments
@@ -37,28 +36,18 @@ if doc_type == "LayCTD":
 
     # Button to trigger generation of the LayCTD draft
     if st.button("Generate LayCTD Draft"):
-        # Use PromptTemplate to insert user-provided values into the lay summary template
-        layctd_prompt = PromptTemplate(
-            input_variables=["purpose", "demographics", "outcomes", "tone"],
-            template=layctd_template
+        # Generate the LayCTD draft
+        draft = generate_draft(
+            llm, layctd_template, {"purpose": purpose, "demographics": demographics, "outcomes": outcomes, "tone": tone}
         )
-        # Format the template with user inputs and the selected tone to create the final prompt
-        prompt = layctd_prompt.format(purpose=purpose, demographics=demographics, outcomes=outcomes, tone=tone)
-        
-        # Call the language model to generate the draft based on the prompt
-        draft = llm.invoke(prompt)
         
         # Display the generated draft on the Streamlit interface
         st.write(draft.content)
 
+        # Save LayCTD draft to the database
+        save_layctd_draft(tone, purpose, demographics, outcomes, draft.content)
+
 elif doc_type == "ICF":
-    # Define a template specific for generating Informed Consent Forms (ICF)
-    icf_template = (
-        "Generate an informed consent form for a clinical trial. "
-        "Information: {info}. Risks: {risks}. Benefits: {benefits}. Duration: {duration}. "
-        "Tone: {tone}."
-    )
-    
     # Input fields specific to ICF documents
     info = st.text_input("Participant Information", help="General information about the participant eligibility and criteria.")
     risks = st.text_input("Study Risks", help="Outline any known or potential risks associated with the study.")
@@ -67,16 +56,13 @@ elif doc_type == "ICF":
 
     # Button to trigger generation of the ICF draft
     if st.button("Generate ICF Draft"):
-        # Use PromptTemplate to insert user-provided values into the ICF template
-        icf_prompt = PromptTemplate(
-            input_variables=["info", "risks", "benefits", "duration", "tone"],
-            template=icf_template
+        # Generate the ICF draft
+        draft = generate_draft(
+            llm, icf_template, {"info": info, "risks": risks, "benefits": benefits, "duration": duration, "tone": tone}
         )
-        # Format the template with user inputs and the selected tone to create the final prompt
-        prompt = icf_prompt.format(info=info, risks=risks, benefits=benefits, duration=duration, tone=tone)
-        
-        # Call the language model to generate the draft based on the prompt
-        draft = llm.invoke(prompt)
         
         # Display the generated draft on the Streamlit interface
         st.write(draft.content)
+
+        # Save ICF draft to the database
+        save_icf_draft(tone, info, risks, benefits, duration, draft.content)

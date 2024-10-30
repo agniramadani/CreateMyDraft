@@ -38,6 +38,7 @@ The aim of this project is to help users create drafts for essential clinical tr
 - Python 3
 - OpenAI
 - LangChain
+- Streamlit
 - SQLite
 - Docker
 

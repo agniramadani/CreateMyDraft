@@ -1,6 +1,6 @@
 # CreateMyDraft
 
-The aim of this project is to help users create drafts for essential clinical trial documents, specifically Lay Clinical Trial Documents (LayCTDs) and Informed Consent Forms (ICFs). Using ChatGPT-4 through LangChain, it allows users to generate drafts tailored to different content details and tones, like simplified language, technical details or detailed explanations. Each draft is saved in a database to keep track of the most commonly generated drafts and support analysis of usage trends. This approach makes it easier and faster to prepare clinical trial documents, supporting clear communication and efficient document management.
+The aim of this project is to help users generate drafts for essential clinical trial documents, specifically Lay Clinical Trial Documents (LayCTDs) and Informed Consent Forms (ICFs). Using ChatGPT-4 via LangChain, it generates drafts to different needs such as simple language, technical details, or in-depth explanations. The app also allows users to view and track previous drafts, simplifying document management and supporting clear communication in clinical trials.
 
 ## Roadmap
 
@@ -20,18 +20,27 @@ The aim of this project is to help users create drafts for essential clinical tr
 
 ## App Overview
 
-### Document Types and Input Details:
+### Features
 
-- **LayCTD (Lay Clinical Trial Document)**:
-   - **Trial Purpose**: A brief description of the main goal of the clinical trial.
+- **Draft Generation**: Generate drafts for clinical trial documentation.
+- **Previous Drafts**: Access and view past drafts.
+
+### Draft Generation 
+#### Document Types and Input Details
+
+The app supports two main document types, each with specific fields:
+
+**Lay Clinical Trial Document (LayCTD)**
+   - **Trial Purpose**: Brief description of the clinical trial's main goal.
    - **Patient Demographics**: Key details about the participants, such as age range and medical condition.
    - **Expected Outcomes**: Summary of anticipated results or potential benefits from the trial.
 
-- **ICF (Informed Consent Form)**:
-   - **Participant Information**: General overview of the participant eligibility criteria and trial context.
-   - **Study Risks**: Details about any potential risks involved in the study.
-   - **Study Benefits**: Description of possible benefits to participants.
-   - **Study Duration**: Expected length of the study, for example, 6 months.
+**Informed Consent Form (ICF)**
+   - **Participant Information**: Overview of participant eligibility criteria and trial context.
+   - **Study Risks**: Information about any potential risks involved in the study.
+   - **Study Benefits**: Description of possible benefits for participants.
+   - **Study Duration**: Expected length of the study (e.g., 6 months).
+
 
 ## Prerequisites
 
@@ -50,8 +59,17 @@ The aim of this project is to help users create drafts for essential clinical tr
 pip install -r requirements.txt
 ```
 
-### Start the Application
+### Database Initialization
+```bash
+cd config && python3 init_db.py
+```
 
+### Set up API Key:
+```bash
+echo "your_api_key_here" > open_api_key.txt
+```
+
+### Start the Application
 ```bash
 streamlit run main.py 
 ```
@@ -63,10 +81,7 @@ The app is also available on Docker Hub. To use the Docker image, simply pull it
 docker pull agnir/createmydraft
 ```
 
-**Important:** After cloning the app, make sure to update `main.py` with your OpenAI API key. This key is necessary for generating content. In the Docker image, the API key is not included, so you will need to add yours manually:
-```bash
-llm = ChatOpenAI(model="gpt-4", api_key="your_key_goes_here")
-```
+**Important:** After cloning the app, make sure to set up API Key. This key is necessary for generating content. In the Docker image, the API key is not included, so you will need to add yours manually.
 
 ## Author
 

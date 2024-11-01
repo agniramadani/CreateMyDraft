@@ -64,7 +64,7 @@ pip install -r requirements.txt
 cd config && python3 init_db.py
 ```
 
-### Set up API Key:
+### Set Up API Key:
 ```bash
 echo "your_api_key_here" > open_api_key.txt
 ```
@@ -76,13 +76,26 @@ streamlit run main.py
 
 ### Alternative: Docker Hub
 
-The app is also available on Docker Hub. To use the Docker image, simply pull it using the following command:
+Pull the Docker Image:
 ```bash
 docker pull agnir/createmydraft
 ```
 
-**Important:** After cloning the app, make sure to set up API Key. This key is necessary for generating content. In the Docker image, the API key is not included, so you will need to add yours manually.
+Start the Container:
+```bash
+docker run -d -p 8501:8501 agnir/createmydraft
+```
 
+Access the Container:
+```bash
+docker exec -it container_id /bin/bash
+```
+
+Set Up Your API Key:
+```bash
+echo "your_api_key_here" > open_api_key.txt
+
+```
 ## Author
 
 - [Agni Ramadani](https://github.com/agniramadani)

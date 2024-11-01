@@ -4,7 +4,7 @@ for LayCTD and ICF documents using user inputs and our language model.
 """
 
 import streamlit as st
-from database.database import save_layctd_draft, save_icf_draft
+from config.database import save_layctd_draft, save_icf_draft
 from services.generate import generate_draft
 from config.llm_initializer import initialize_llm
 from services.templates import layctd_template, icf_template

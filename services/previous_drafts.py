@@ -4,7 +4,7 @@ allowing users to select and view details for LayCTD or ICF drafts.
 """
 
 import streamlit as st
-from database.database import get_layctd_drafts, get_icf_drafts
+from config.database import get_layctd_drafts, get_icf_drafts
 
 def render_previous_drafts():
     doc_type = st.sidebar.selectbox("Select Document Type", ["LayCTD", "ICF"])
@@ -12,7 +12,6 @@ def render_previous_drafts():
 
     if doc_type == "LayCTD":
         drafts = get_layctd_drafts()
-        st.subheader("Previous LayCTD Drafts")
         
         for draft in drafts:
             st.write(f"**Tone:** {draft[1]}")
@@ -28,7 +27,6 @@ def render_previous_drafts():
 
     else:
         drafts = get_icf_drafts()
-        st.subheader("Previous ICF Drafts")
         
         for draft in drafts:
             st.write(f"**Tone:** {draft[1]}")
